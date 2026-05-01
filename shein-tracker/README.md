@@ -133,7 +133,7 @@ Content-Type: application/json
   "mode": "weight",
   "city": "tripoli",
   "contactMethod": "whatsapp",
-  "contactInfo": "+2187671005"
+  "contactInfo": "+218917671005"
 }
 ```
 
