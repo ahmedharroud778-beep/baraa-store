@@ -7,8 +7,7 @@ import AdminLogin from './pages/admin/Login';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminSettings from './pages/admin/Settings';
 import AdminLocations from './pages/admin/Locations';
-import AdminClothing from './pages/admin/Clothing';
-import { Calculator as CalculatorIcon, Search, Settings, LogOut, Globe, MapPin, Package } from 'lucide-react';
+import { Calculator as CalculatorIcon, Search, Settings, LogOut, Globe, MapPin } from 'lucide-react';
 
 function Navbar() {
   const location = useLocation();
