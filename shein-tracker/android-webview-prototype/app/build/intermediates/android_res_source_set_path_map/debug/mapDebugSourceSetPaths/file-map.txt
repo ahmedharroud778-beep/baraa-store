@@ -1,0 +1,9 @@
+com.shein.tracker.app-pngs-0 C:\Users\ahmed\Desktop\code\shein-tracker\android-webview-prototype\app\build\generated\res\pngs\debug
+com.shein.tracker.app-resValues-1 C:\Users\ahmed\Desktop\code\shein-tracker\android-webview-prototype\app\build\generated\res\resValues\debug
+com.shein.tracker.app-updated_navigation_xml-2 C:\Users\ahmed\Desktop\code\shein-tracker\android-webview-prototype\app\build\generated\updated_navigation_xml\debug
+com.shein.tracker.app-packageDebugResources-3 C:\Users\ahmed\Desktop\code\shein-tracker\android-webview-prototype\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.shein.tracker.app-packageDebugResources-4 C:\Users\ahmed\Desktop\code\shein-tracker\android-webview-prototype\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.shein.tracker.app-debug-5 C:\Users\ahmed\Desktop\code\shein-tracker\android-webview-prototype\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.shein.tracker.app-debug-6 C:\Users\ahmed\Desktop\code\shein-tracker\android-webview-prototype\app\src\debug\res
+com.shein.tracker.app-main-7 C:\Users\ahmed\Desktop\code\shein-tracker\android-webview-prototype\app\src\main\res
+gradleHome-0 C:\Users\ahmed\.gradle

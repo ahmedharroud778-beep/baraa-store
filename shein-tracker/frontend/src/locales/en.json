@@ -1,0 +1,27 @@
+{
+  "calculator": {
+    "title": "Shein Cart Calculator",
+    "subtitle": "Calculate shipping costs to Libya",
+    "contactPrompt": "Want to contact us directly?",
+    "hint": "Hint",
+    "hintText": "fill up this form to calculate your shein cart price to your home door",
+    "cartUrlLabel": "Cart URL",
+    "cartUrlOptional": "Optional",
+    "cartUrlPlaceholder": "Put the cart link if you want it; it will be sent to us",
+    "cartTotalLabel": "Cart Total (USD)",
+    "cartTotalRequired": "Required",
+    "cartTotalPlaceholder": "Put the cart total in USD",
+    "calcMode": "Calculation Mode",
+    "priceBased": "Price Based",
+    "weightBased": "Weight Based",
+    "includeDelivery": "Include Delivery",
+    "selectCity": "Select City",
+    "calculateBtn": "Calculate Estimate",
+    "calculatingBtn": "Calculating..."
+  },
+  "modal": {
+    "languageTitle": "Choose your language",
+    "english": "English",
+    "arabic": "العربية"
+  }
+}

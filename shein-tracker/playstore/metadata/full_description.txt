@@ -1,0 +1,60 @@
+Shein Tracker - Your complete solution for tracking and estimating Shein cart prices with delivery to Libyan cities.
+
+KEY FEATURES:
+
+📦 PRICE ESTIMATION
+- Get instant price estimates for your Shein cart
+- Support for both price-based and weight-based calculations
+- Real-time currency conversion (USD to LYD)
+- Transparent breakdown of all fees
+
+🚚 DELIVERY TO LIBYAN CITIES
+- Delivery available to major Libyan cities
+- City-specific delivery fees
+- Accurate weight calculations for clothing items
+
+📱 EASY ORDER TRACKING
+- Track your orders with unique order IDs
+- Real-time status updates
+- Order history at your fingertips
+
+💬 DIRECT CONTACT
+- Contact us directly via WhatsApp or Messenger
+- Get quick answers to your questions
+- Personalized customer support
+
+🌐 OFFLINE SUPPORT
+- Access your order information even without internet
+- Cached content for faster loading
+- Automatic sync when connection is restored
+
+🔒 SECURE & PRIVATE
+- Your data is stored securely
+- No database credentials in the app
+- Server-side authentication only
+
+HOW IT WORKS:
+
+1. Enter your Shein cart URL or total amount
+2. Select your city for delivery
+3. Get instant price estimate
+4. Contact us to confirm your order
+5. Track your order status
+
+SUPPORTED CITIES:
+- Tripoli
+- Benghazi
+- Misrata
+- And more...
+
+PERFECT FOR:
+- Online shoppers in Libya
+- Anyone ordering from Shein
+- Those who want transparent pricing
+- Customers who need reliable delivery
+
+Download Shein Tracker now and take the guesswork out of your Shein orders!
+
+For support, contact us via WhatsApp or Messenger directly from the app.
+
+Note: This app is a price estimation and tracking tool. Actual prices may vary based on Shein's current rates and promotions.

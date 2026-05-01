@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start *)",
+      "Skill(update-config)",
+      "Bash(claude plugin *)",
+      "Bash(mkdir -p \"C:/Users/ahmed/Desktop/code/shein-tracker\")",
+      "Bash(mkdir -p backend frontend scraper docker shared)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "WebSearch"
+    ]
+  }
+}

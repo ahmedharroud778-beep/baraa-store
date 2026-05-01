@@ -1,0 +1,877 @@
+openapi: 3.0.3
+info:
+  title: Shein Cart Tracker API
+  description: API for tracking and estimating Shein cart prices with delivery to Libyan cities
+  version: 1.0.0
+  contact:
+    name: Shein Tracker Support
+    email: support@example.com
+
+servers:
+  - url: http://localhost:5000/api
+    description: Local development server
+  - url: https://api.example.com/api
+    description: Production server
+
+tags:
+  - name: Orders
+    description: Order management endpoints
+  - name: Estimates
+    description: Price estimation endpoints
+  - name: Auth
+    description: Authentication endpoints
+  - name: Admin
+    description: Admin management endpoints (requires authentication)
+
+paths:
+  /orders:
+    post:
+      tags:
+        - Orders
+      summary: Create a new order
+      description: Creates a new order with the provided details
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+            examples:
+              priceMode:
+                summary: Order with price mode
+                value:
+                  orderId: "ORD-123456"
+                  cartUrl: "https://shein.com/cart/abc123"
+                  mode: "price"
+                  city: "Tripoli"
+                  contactMethod: "whatsapp"
+                  contactInfo: "+218910000000"
+                  originalPrice: 100.00
+                  convertedPrice: 490.00
+                  weightFee: 0.00
+                  deliveryFee: 25.00
+                  totalEstimated: 515.00
+              weightMode:
+                summary: Order with weight mode
+                value:
+                  orderId: "ORD-789012"
+                  mode: "weight"
+                  city: "Benghazi"
+                  contactMethod: "messenger"
+                  originalPrice: 0
+                  convertedPrice: 0
+                  weightFee: 150.00
+                  deliveryFee: 30.00
+                  totalEstimated: 180.00
+      responses:
+        '201':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          description: Bad request - missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - Orders
+      summary: Get all orders (Admin only)
+      description: Retrieves all orders. Requires authentication.
+      operationId: getAllOrders
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          description: Filter orders by status
+          required: false
+          schema:
+            type: string
+            enum: [not_confirmed, confirmed, processing, delivered, cancelled]
+      responses:
+        '200':
+          description: Orders retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      orders:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Order'
+                      total:
+                        type: integer
+                        example: 42
+        '401':
+          description: Unauthorized - missing or invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /orders/{id}:
+    get:
+      tags:
+        - Orders
+      summary: Get order by database ID
+      description: Retrieves a specific order by its database ID
+      operationId: getOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Database ID of the order
+          schema:
+            type: string
+          example: "clx1234567890abc"
+      responses:
+        '200':
+          description: Order retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /orders/order-id/{orderId}:
+    get:
+      tags:
+        - Orders
+      summary: Get order by order ID
+      description: Retrieves a specific order by its order ID (e.g., ORD-123456)
+      operationId: getOrderByOrderId
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: Order ID (e.g., ORD-123456)
+          schema:
+            type: string
+          example: "ORD-123456"
+      responses:
+        '200':
+          description: Order retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /estimate/config:
+    get:
+      tags:
+        - Estimates
+      summary: Get estimation configuration
+      description: Retrieves configuration data including cities, clothing items, and settings
+      operationId: getEstimateConfig
+      responses:
+        '200':
+          description: Configuration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateConfigResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /estimate/price:
+    post:
+      tags:
+        - Estimates
+      summary: Calculate price estimate
+      description: Calculates an estimated price based on cart details
+      operationId: calculateEstimate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstimateRequest'
+            examples:
+              cartUrl:
+                summary: Estimate from cart URL
+                value:
+                  cartUrl: "https://shein.com/cart/abc123"
+                  mode: "price"
+                  city: "Tripoli"
+              manualPrice:
+                summary: Estimate from manual price
+                value:
+                  cartTotal: 100.00
+                  mode: "price"
+                  city: "Benghazi"
+              weightMode:
+                summary: Estimate from weight
+                value:
+                  totalWeight: 2.5
+                  mode: "weight"
+                  city: "Misrata"
+      responses:
+        '200':
+          description: Estimate calculated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateResponse'
+        '400':
+          description: Bad request - invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /admin/login:
+    post:
+      tags:
+        - Auth
+      summary: Admin login
+      description: Authenticates an admin user and returns a JWT token
+      operationId: adminLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              defaultAdmin:
+                summary: Default admin credentials
+                value:
+                  email: "admin@example.com"
+                  password: "password"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /admin/settings:
+    get:
+      tags:
+        - Admin
+      summary: Get admin settings
+      description: Retrieves current application settings. Requires authentication.
+      operationId: getSettings
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Settings retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - Admin
+      summary: Update admin settings
+      description: Updates application settings. Requires authentication.
+      operationId: updateSettings
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettingsUpdate'
+      responses:
+        '200':
+          description: Settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /admin/orders/{id}/status:
+    put:
+      tags:
+        - Admin
+      summary: Update order status
+      description: Updates the status of a specific order. Requires authentication.
+      operationId: updateOrderStatus
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Database ID of the order
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  enum: [not_confirmed, confirmed, processing, delivered, cancelled]
+                  description: New order status
+      responses:
+        '200':
+          description: Order status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from /admin/login
+
+  schemas:
+    OrderRequest:
+      type: object
+      required:
+        - orderId
+        - mode
+      properties:
+        orderId:
+          type: string
+          description: Unique order identifier (e.g., ORD-123456)
+          example: "ORD-123456"
+        cartUrl:
+          type: string
+          format: uri
+          description: Shein cart URL
+          example: "https://shein.com/cart/abc123"
+        mode:
+          type: string
+          enum: [price, weight]
+          description: Calculation mode
+          example: "price"
+        city:
+          type: string
+          description: City name for delivery
+          example: "Tripoli"
+        contactMethod:
+          type: string
+          enum: [whatsapp, messenger]
+          description: Preferred contact method
+          example: "whatsapp"
+        contactInfo:
+          type: string
+          description: Contact information (phone number, etc.)
+          example: "+218910000000"
+        originalPrice:
+          type: number
+          format: float
+          description: Original price in USD
+          example: 100.00
+        convertedPrice:
+          type: number
+          format: float
+          description: Converted price in LYD
+          example: 490.00
+        weightFee:
+          type: number
+          format: float
+          description: Weight-based fee in LYD
+          example: 0.00
+        deliveryFee:
+          type: number
+          format: float
+          description: Delivery fee in LYD
+          example: 25.00
+        totalEstimated:
+          type: number
+          format: float
+          description: Total estimated price in LYD
+          example: 515.00
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Database ID (CUID)
+          example: "clx1234567890abc"
+        orderId:
+          type: string
+          description: Order ID
+          example: "ORD-123456"
+        cartUrl:
+          type: string
+          description: Shein cart URL
+          example: "https://shein.com/cart/abc123"
+        mode:
+          type: string
+          enum: [price, weight]
+          description: Calculation mode
+          example: "price"
+        city:
+          type: string
+          description: City name for delivery
+          example: "Tripoli"
+        status:
+          type: string
+          enum: [not_confirmed, confirmed, processing, delivered, cancelled]
+          description: Order status
+          example: "not_confirmed"
+        originalPrice:
+          type: number
+          format: float
+          description: Original price in USD
+          example: 100.00
+        convertedPrice:
+          type: number
+          format: float
+          description: Converted price in LYD
+          example: 490.00
+        weightFee:
+          type: number
+          format: float
+          description: Weight-based fee in LYD
+          example: 0.00
+        deliveryFee:
+          type: number
+          format: float
+          description: Delivery fee in LYD
+          example: 25.00
+        totalEstimated:
+          type: number
+          format: float
+          description: Total estimated price in LYD
+          example: 515.00
+        cartSnapshot:
+          type: object
+          description: JSON snapshot of cart items
+          nullable: true
+        contactMethod:
+          type: string
+          enum: [whatsapp, messenger]
+          description: Preferred contact method
+          example: "whatsapp"
+        contactInfo:
+          type: string
+          description: Contact information
+          example: "+218910000000"
+        createdAt:
+          type: string
+          format: date-time
+          description: Order creation timestamp
+          example: "2024-04-30T12:00:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+          example: "2024-04-30T12:00:00Z"
+
+    OrderResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/Order'
+
+    EstimateRequest:
+      type: object
+      required:
+        - mode
+      properties:
+        cartUrl:
+          type: string
+          format: uri
+          description: Shein cart URL for scraping
+          example: "https://shein.com/cart/abc123"
+        cartTotal:
+          type: number
+          format: float
+          description: Manual cart total in USD
+          example: 100.00
+        totalWeight:
+          type: number
+          format: float
+          description: Total weight in kg
+          example: 2.5
+        mode:
+          type: string
+          enum: [price, weight]
+          description: Calculation mode
+          example: "price"
+        city:
+          type: string
+          description: City name for delivery fee calculation
+          example: "Tripoli"
+
+    EstimateResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            orderId:
+              type: string
+              description: Generated order ID
+              example: "ORD-123456"
+            scrapeJobId:
+              type: string
+              description: Job ID for scraping (if applicable)
+              example: "job-abc123"
+            mode:
+              type: string
+              description: Calculation mode used
+              example: "price"
+            city:
+              type: string
+              description: City for delivery
+              example: "Tripoli"
+            estimatedTotal:
+              type: number
+              format: float
+              description: Total estimated price in LYD
+              example: 515.00
+            breakdown:
+              type: object
+              properties:
+                originalPrice:
+                  type: number
+                  format: float
+                  description: Original price in USD
+                  example: 100.00
+                convertedPrice:
+                  type: number
+                  format: float
+                  description: Converted price in LYD
+                  example: 490.00
+                weightFee:
+                  type: number
+                  format: float
+                  description: Weight-based fee in LYD
+                  example: 0.00
+                deliveryFee:
+                  type: number
+                  format: float
+                  description: Delivery fee in LYD
+                  example: 25.00
+            status:
+              type: string
+              description: Order status
+              example: "not_confirmed"
+
+    EstimateConfigResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            settings:
+              $ref: '#/components/schemas/Settings'
+            cities:
+              type: array
+              items:
+                $ref: '#/components/schemas/City'
+            clothingItems:
+              type: array
+              items:
+                $ref: '#/components/schemas/ClothingItem'
+
+    City:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nameEn:
+          type: string
+          description: City name in English
+          example: "Tripoli"
+        nameAr:
+          type: string
+          description: City name in Arabic
+          example: "طرابلس"
+
+    ClothingItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nameEn:
+          type: string
+          description: Item name in English
+          example: "T-Shirt"
+        nameAr:
+          type: string
+          description: Item name in Arabic
+          example: "تيشيرت"
+        weights:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClothingWeight'
+
+    ClothingWeight:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        clothingItemId:
+          type: integer
+          example: 1
+        labelEn:
+          type: string
+          description: Weight label in English
+          example: "Small"
+        labelAr:
+          type: string
+          description: Weight label in Arabic
+          example: "صغير"
+        weightKg:
+          type: number
+          format: float
+          description: Weight in kilograms
+          example: 0.3
+
+    Settings:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "clx1234567890abc"
+        libyanRate:
+          type: number
+          format: float
+          description: Exchange rate from USD to LYD
+          example: 4.9
+        perKgFee:
+          type: number
+          format: float
+          description: Fee per kilogram in LYD
+          example: 15.0
+        itemWeights:
+          type: object
+          additionalProperties:
+            type: number
+          description: Default weights for clothing items
+          example:
+            "tshirt": 0.3
+            "jeans": 0.8
+        cityFees:
+          type: object
+          additionalProperties:
+            type: number
+          description: Delivery fees by city
+          example:
+            "Tripoli": 25.0
+            "Benghazi": 30.0
+
+    SettingsUpdate:
+      type: object
+      properties:
+        libyanRate:
+          type: number
+          format: float
+          example: 4.9
+        perKgFee:
+          type: number
+          format: float
+          example: 15.0
+        itemWeights:
+          type: object
+          additionalProperties:
+            type: number
+        cityFees:
+          type: object
+          additionalProperties:
+            type: number
+
+    SettingsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/Settings'
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: Admin email address
+          example: "admin@example.com"
+        password:
+          type: string
+          format: password
+          description: Admin password
+          example: "password"
+
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              description: JWT authentication token
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+            admin:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: "clx1234567890abc"
+                email:
+                  type: string
+                  example: "admin@example.com"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Failed to create order"

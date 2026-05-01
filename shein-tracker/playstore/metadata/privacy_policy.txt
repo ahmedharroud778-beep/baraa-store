@@ -1,0 +1,100 @@
+# Privacy Policy - Shein Tracker
+
+Last Updated: April 30, 2026
+
+## 1. Introduction
+
+Welcome to Shein Tracker ("we," "our," or "us"). We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our mobile application.
+
+## 2. Information We Collect
+
+### 2.1 Information You Provide
+- Contact information (when you choose to share it)
+- Order details (for tracking purposes)
+
+### 2.2 Automatically Collected Information
+- Device information (device type, operating system version)
+- App usage data (for improving our services)
+- Network information (for connectivity purposes)
+
+### 2.3 Information We Do NOT Collect
+- We do NOT collect or store your database credentials
+- We do NOT have access to your Shein account
+- We do NOT store your passwords or payment information
+
+## 3. How We Use Your Information
+
+We use the collected information to:
+- Provide and improve our services
+- Process and track your orders
+- Communicate with you about your orders
+- Ensure app security and functionality
+- Send you updates and promotional messages (with your consent)
+
+## 4. Data Storage and Security
+
+### 4.1 Local Storage
+- Your data is stored securely on your device using Android Keystore
+- All sensitive information is encrypted using AES-256-GCM
+- We use hardware-backed encryption when available
+
+### 4.2 Server-Side Storage
+- Order information is stored on our secure servers
+- All database access is server-side only
+- We use industry-standard security measures
+
+## 5. Data Sharing
+
+We do NOT sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:
+
+- With service providers who assist us in operating our app
+- When required by law or to protect our rights
+- With your explicit consent
+
+## 6. Third-Party Services
+
+Our app may use third-party services:
+- Shein website (for price estimation)
+- WhatsApp and Messenger (for contact)
+- Google Play Services (for app updates)
+
+These services have their own privacy policies.
+
+## 7. Your Rights
+
+You have the right to:
+- Access your personal information
+- Correct inaccurate information
+- Delete your account and data
+- Opt-out of communications
+- Request a copy of your data
+
+## 8. Children's Privacy
+
+Our app is not intended for children under 13. We do not knowingly collect information from children.
+
+## 9. Changes to This Policy
+
+We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page.
+
+## 10. Contact Us
+
+If you have questions about this Privacy Policy, please contact us:
+
+- Email: privacy@sheintracker.com
+- WhatsApp: +21891XXXXXXX
+- Messenger: [Your Messenger Link]
+
+## 11. App Permissions
+
+Our app requires the following permissions:
+
+- **INTERNET**: Required for web functionality and updates
+- **ACCESS_NETWORK_STATE**: Required for connectivity detection
+- **REQUEST_INSTALL_PACKAGES**: Required for app updates
+
+We use these permissions only for the stated purposes.
+
+---
+
+This Privacy Policy is effective as of April 30, 2026.

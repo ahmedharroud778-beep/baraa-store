@@ -1,0 +1,14 @@
+Version 1.0.0
+
+Initial release of Shein Tracker!
+
+Features:
+- Price estimation for Shein carts
+- Delivery to Libyan cities
+- Order tracking with unique IDs
+- Direct contact via WhatsApp and Messenger
+- Offline support
+- Secure token storage
+- Automatic app updates
+
+Thank you for using Shein Tracker!

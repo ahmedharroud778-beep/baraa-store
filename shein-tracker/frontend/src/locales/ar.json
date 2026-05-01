@@ -1,0 +1,27 @@
+{
+  "calculator": {
+    "title": "حاسبة سلة شي إن",
+    "subtitle": "احسب تكاليف الشحن إلى ليبيا",
+    "contactPrompt": "هل تريد التواصل معنا مباشرة؟",
+    "hint": "تلميح",
+    "hintText": "املأ هذا النموذج لحساب سعر سلة شي إن الخاصة بك حتى باب منزلك",
+    "cartUrlLabel": "رابط السلة",
+    "cartUrlOptional": "اختياري",
+    "cartUrlPlaceholder": "ضع رابط السلة إذا رغبت؛ سيتم إرساله إلينا",
+    "cartTotalLabel": "إجمالي السلة (بالدولار)",
+    "cartTotalRequired": "مطلوب",
+    "cartTotalPlaceholder": "ضع إجمالي السلة بالدولار الأمريكي",
+    "calcMode": "طريقة الحساب",
+    "priceBased": "حسب السعر",
+    "weightBased": "حسب الوزن",
+    "includeDelivery": "تضمين التوصيل",
+    "selectCity": "اختر المدينة",
+    "calculateBtn": "احسب التكلفة",
+    "calculatingBtn": "جاري الحساب..."
+  },
+  "modal": {
+    "languageTitle": "اختر لغتك",
+    "english": "English",
+    "arabic": "العربية"
+  }
+}
