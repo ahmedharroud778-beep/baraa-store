@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var networkHelper: NetworkHelper
     private lateinit var updateChecker: UpdateChecker
 
-    private val WEB_URL = "file:///android_asset/index.html"
+    private val WEB_URL = "https://baraa-store-1.onrender.com"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
