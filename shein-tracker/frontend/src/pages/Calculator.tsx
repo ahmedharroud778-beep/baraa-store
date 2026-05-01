@@ -89,7 +89,7 @@ export default function Calculator() {
 
     const openContactLink = async (text: string) => {
       if (contactMethodIntent === 'whatsapp') {
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
+        window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
       } else {
         // Use synchronous copy so it finishes before the new tab steals focus
         const textArea = document.createElement("textarea");
@@ -104,7 +104,7 @@ export default function Calculator() {
         document.body.removeChild(textArea);
 
         const messengerUrl = MESSENGER_LINK.startsWith('http') ? MESSENGER_LINK : `https://m.me/${MESSENGER_LINK}`;
-        window.open(messengerUrl, '_blank');
+        window.location.href = messengerUrl;
 
         setTimeout(() => {
           alert('Order details copied to clipboard! Please paste them in the chat.');
@@ -150,10 +150,10 @@ export default function Calculator() {
     const MESSENGER_LINK = '61575598744755'; // Using numeric ID to open Messenger directly
 
     if (method === 'whatsapp') {
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank');
+      window.location.href = `https://wa.me/${WHATSAPP_NUMBER}`;
     } else {
       const messengerUrl = MESSENGER_LINK.startsWith('http') ? MESSENGER_LINK : `https://m.me/${MESSENGER_LINK}`;
-      window.open(messengerUrl, '_blank');
+      window.location.href = messengerUrl;
     }
   };
 
