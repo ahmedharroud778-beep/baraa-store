@@ -84,7 +84,7 @@ export default function Calculator() {
     setLoading(true);
 
     // IMPORTANT: CHANGE THESE NUMBERS AND LINKS TO YOUR ACTUAL CONTACT DETAILS!
-    const WHATSAPP_NUMBER = '21891'; // e.g., '218910000000' (Include country code)
+    const WHATSAPP_NUMBER = '2187671005'; // e.g., '218910000000' (Include country code)
     const MESSENGER_LINK = '61575598744755'; // Using numeric ID to open Messenger directly
 
     const openContactLink = async (text: string) => {
@@ -146,7 +146,7 @@ export default function Calculator() {
   };
 
   const handleDirectContact = (method: 'whatsapp' | 'messenger') => {
-    const WHATSAPP_NUMBER = '21891'; // Changed to match your updated number
+    const WHATSAPP_NUMBER = '2187671005'; // Changed to match your updated number
     const MESSENGER_LINK = '61575598744755'; // Using numeric ID to open Messenger directly
 
     if (method === 'whatsapp') {
