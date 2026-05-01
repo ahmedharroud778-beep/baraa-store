@@ -35,13 +35,6 @@ function Navbar() {
               Locations
             </Link>
             <Link
-              to="/admin/clothing"
-              className="flex items-center gap-2 hover:text-pink-400 transition-colors"
-            >
-              <Package className="w-5 h-5" />
-              Clothing
-            </Link>
-            <Link
               to="/admin/settings"
               className="flex items-center gap-2 hover:text-pink-400 transition-colors"
             >
@@ -157,7 +150,6 @@ function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/settings" element={<AdminSettings />} />
         <Route path="/admin/locations" element={<AdminLocations />} />
-        <Route path="/admin/clothing" element={<AdminClothing />} />
       </Routes>
     </Router>
   );

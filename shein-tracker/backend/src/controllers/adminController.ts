@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
+import { ensureDefaultCities } from '../utils/seedCities';
 
 export const adminController = {
   async login(req: Request, res: Response) {
@@ -197,9 +198,20 @@ export const adminController = {
     }
   },
 
+  async deleteOrder(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      await prisma.order.delete({ where: { id: String(id) } });
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      res.status(500).json({ error: 'Failed to delete order' });
+    }
+  },
+
   async getCities(req: Request, res: Response) {
     try {
-      const cities = await prisma.city.findMany();
+      const cities = await ensureDefaultCities();
       res.json({ success: true, data: cities });
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch cities' });

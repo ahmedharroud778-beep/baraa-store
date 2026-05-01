@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { calculationService } from '../services/calculationService';
 import { PrismaClient } from '@prisma/client';
+import { ensureDefaultCities } from '../utils/seedCities';
 
 const prisma = new PrismaClient();
 
@@ -8,7 +9,7 @@ export const estimateController = {
   async getConfig(req: Request, res: Response) {
     try {
       const settings = await prisma.settings.findFirst();
-      const cities = await prisma.city.findMany();
+      const cities = await ensureDefaultCities();
       const clothingItems = await prisma.clothingItem.findMany({ include: { weights: true } });
       
       res.json({

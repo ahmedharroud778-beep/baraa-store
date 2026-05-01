@@ -1,0 +1,3 @@
+com.shein.tracker.test
+style WhiteBackgroundDialogTheme
+style WhiteBackgroundTheme

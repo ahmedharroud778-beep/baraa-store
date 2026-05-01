@@ -254,6 +254,16 @@ export const api = {
     return result.data;
   },
 
+  async deleteOrder(token: string, id: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/admin/orders/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete order');
+    }
+  },
+
   async getCities(token: string): Promise<City[]> {
     const response = await fetch(`${API_BASE_URL}/admin/cities`, {
       headers: { Authorization: `Bearer ${token}` }

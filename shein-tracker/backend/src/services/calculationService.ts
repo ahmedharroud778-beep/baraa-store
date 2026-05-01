@@ -35,7 +35,8 @@ export const calculationService = {
 
     const cartData = { totalPrice: providedCartTotal, currency: 'USD' };
     const cityFees = settings.cityFees as Record<string, number>;
-    const deliveryFee = city ? cityFees[city] || 0 : 0;
+    const feeKey = city ? Object.keys(cityFees).find(k => k.toLowerCase() === city.toLowerCase()) : undefined;
+    const deliveryFee = feeKey ? cityFees[feeKey] : 0;
     const convertedPrice = cartData.totalPrice * settings.libyanRate;
     const weightFee = mode === 'weight' && providedTotalWeight ? providedTotalWeight * settings.perKgFee : 0;
     const estimatedTotal = convertedPrice + deliveryFee + weightFee;

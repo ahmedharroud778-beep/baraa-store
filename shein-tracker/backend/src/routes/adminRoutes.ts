@@ -9,6 +9,7 @@ router.get('/settings', adminController.getSettings);
 router.put('/settings', authMiddleware, adminController.updateSettings);
 router.get('/orders', authMiddleware, adminController.getAllOrders);
 router.put('/orders/:id/status', authMiddleware, adminController.updateOrderStatus);
+router.delete('/orders/:id', authMiddleware, adminController.deleteOrder);
 
 // Cities
 router.get('/cities', authMiddleware, adminController.getCities);

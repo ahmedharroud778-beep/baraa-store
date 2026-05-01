@@ -38,6 +38,18 @@ export default function Dashboard() {
     }
   };
 
+  const deleteOrder = async (orderId: string) => {
+    if (!window.confirm('Are you sure you want to delete this order?')) return;
+    try {
+      const token = localStorage.getItem('adminToken');
+      if (!token) return;
+      await api.deleteOrder(token, orderId);
+      fetchOrders();
+    } catch (error) {
+      console.error('Failed to delete order:', error);
+    }
+  };
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'not_confirmed':
@@ -174,6 +186,12 @@ export default function Dashboard() {
                         <option value="on_the_way">On the way</option>
                         <option value="delivered">Delivered</option>
                       </select>
+                      <button
+                        onClick={() => deleteOrder(order.id)}
+                        className="ml-2 text-red-600 hover:text-red-900"
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
