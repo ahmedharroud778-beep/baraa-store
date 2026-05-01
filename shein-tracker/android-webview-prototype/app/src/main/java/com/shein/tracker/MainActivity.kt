@@ -115,6 +115,75 @@ class MainActivity : AppCompatActivity() {
                 hideLoading()
             }
 
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                val url = request?.url?.toString() ?: return false
+
+                // Handle external links (WhatsApp, Messenger, etc.)
+                if (url.startsWith("http://") || url.startsWith("https://")) {
+                    // Check if it's an external app link that should open outside WebView
+                    if (url.contains("wa.me") || url.contains("m.me") || url.contains("facebook.com") || url.contains("messenger.com")) {
+                        // Open in external browser/app
+                        val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        try {
+                            startActivity(intent)
+                            return true
+                        } catch (e: Exception) {
+                            // If no app can handle, let WebView try
+                            return false
+                        }
+                    }
+                    // Regular web links, let WebView handle
+                    return false
+                } else {
+                    // Non-http schemes (like whatsapp://, fb-messenger://, etc.)
+                    val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    try {
+                        startActivity(intent)
+                        return true
+                    } catch (e: Exception) {
+                        // If no app can handle, show error
+                        return true
+                    }
+                }
+            }
+
+            // For older Android versions
+            @Suppress("DEPRECATION")
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                val urlStr = url ?: return false
+
+                // Handle external links (WhatsApp, Messenger, etc.)
+                if (urlStr.startsWith("http://") || urlStr.startsWith("https://")) {
+                    // Check if it's an external app link that should open outside WebView
+                    if (urlStr.contains("wa.me") || urlStr.contains("m.me") || urlStr.contains("facebook.com") || urlStr.contains("messenger.com")) {
+                        // Open in external browser/app
+                        val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(urlStr))
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        try {
+                            startActivity(intent)
+                            return true
+                        } catch (e: Exception) {
+                            // If no app can handle, let WebView try
+                            return false
+                        }
+                    }
+                    // Regular web links, let WebView handle
+                    return false
+                } else {
+                    // Non-http schemes
+                    val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(urlStr))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    try {
+                        startActivity(intent)
+                        return true
+                    } catch (e: Exception) {
+                        return true
+                    }
+                }
+            }
+
             override fun onReceivedError(
                 view: WebView?,
                 request: WebResourceRequest?,
