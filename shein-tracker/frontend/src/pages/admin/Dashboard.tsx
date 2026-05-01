@@ -188,7 +188,7 @@ export default function Dashboard() {
                       </select>
                       <button
                         onClick={() => deleteOrder(order.id)}
-                        className="ml-2 text-red-600 hover:text-red-900"
+                        className="ml-2 px-3 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 transition-colors"
                       >
                         Delete
                       </button>
